@@ -1,10 +1,10 @@
 {
   "latestErrorEvent": {
     "code": "TYPE-001",
-    "message": "Failed to generate type declaration. Execute the below cmd to reproduce and fix the error. #TYPE-001\nargs: {\"cmd\":\"/usr/local/bin/node /Users/shan/Dev/React/react-mfe-platform/node_modules/.pnpm/typescript@6.0.3/node_modules/typescript/bin/tsc --project /Users/shan/Dev/React/react-mfe-platform/apps/product-mfe/node_modules/.federation/tsconfig.b8c133773d94190db2f59b3fe6270ef4.json\"}\nView the docs to see how to solve: https://module-federation.io/guide/troubleshooting/type#type-001",
+    "message": "Failed to generate type declaration. Execute the below cmd to reproduce and fix the error. #TYPE-001\nargs: {\"cmd\":\"/usr/local/bin/node /Users/shan/Dev/React/react-mfe-platform/node_modules/.pnpm/typescript@6.0.3/node_modules/typescript/bin/tsc --project /Users/shan/Dev/React/react-mfe-platform/apps/product-mfe/node_modules/.federation/tsconfig.a588ce12f8533a51b14466f5d01c4cd8.json\"}\nView the docs to see how to solve: https://module-federation.io/guide/troubleshooting/type#type-001",
     "args": {
-      "cmd": "/usr/local/bin/node /Users/shan/Dev/React/react-mfe-platform/node_modules/.pnpm/typescript@6.0.3/node_modules/typescript/bin/tsc --project /Users/shan/Dev/React/react-mfe-platform/apps/product-mfe/node_modules/.federation/tsconfig.b8c133773d94190db2f59b3fe6270ef4.json"
+      "cmd": "/usr/local/bin/node /Users/shan/Dev/React/react-mfe-platform/node_modules/.pnpm/typescript@6.0.3/node_modules/typescript/bin/tsc --project /Users/shan/Dev/React/react-mfe-platform/apps/product-mfe/node_modules/.federation/tsconfig.a588ce12f8533a51b14466f5d01c4cd8.json"
     },
-    "timestamp": 1790971599484
+    "timestamp": 1790973174531
   }
 }

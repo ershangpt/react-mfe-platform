@@ -8,6 +8,8 @@ export default defineConfig({
 
     federation({
       name: 'product',
+
+      filename: 'remoteEntry.js',
       
       exposes: {
         './ProductApp': './src/ProductRoot.tsx',
