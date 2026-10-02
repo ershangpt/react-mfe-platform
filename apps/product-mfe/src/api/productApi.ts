@@ -1,9 +1,9 @@
-import { createApiClient } from '@company/api-client';
+//import { createApiClient } from '@company/api-client';
 import { getAuth } from '../auth/auth';
 
-import { getRuntimeConfig } from '@company/runtime-config';
+//import { getRuntimeConfig } from '@company/runtime-config';
 
-const config = getRuntimeConfig();
+//const config = getRuntimeConfig();
 
 export type Product = {
   id: number;
@@ -11,11 +11,11 @@ export type Product = {
   price: number;
 };
 
-const apiClient = createApiClient({
-  baseUrl: config.API_BASE_URL,
-  getAccessToken: () =>
-    getAuth().getAccessToken(),
-});
+// const apiClient = createApiClient({
+//   baseUrl: config.API_BASE_URL,
+//   getAccessToken: () =>
+//     getAuth().getAccessToken(),
+// });
 
 export async function getProducts(): Promise<Product[]> {
   const auth = getAuth();
