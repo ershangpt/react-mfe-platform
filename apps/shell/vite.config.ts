@@ -13,7 +13,7 @@ export default defineConfig({
         product: {
           type: 'module',
           name: 'product',
-          entry: 'http://localhost:5174/remoteEntry.js',
+          entry: 'https://d3oiopgmakh4ga.cloudfront.net/remoteEntry.js',
         },
 
         order: {
