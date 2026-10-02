@@ -1,20 +1,21 @@
 import { create } from 'zustand';
-import type { AuthUser } from './authTypes';
+import type { StateCreator } from 'zustand';
 import { devtools } from 'zustand/middleware';
+import type { AuthUser } from './authTypes';
 
-// type AuthState = {
-//   user: AuthUser | null;
-//   isAuthenticated: boolean;
+type AuthState = {
+  user: AuthUser | null;
+  isAuthenticated: boolean;
 
-//   setAuthenticatedUser: (user: AuthUser) => void;
-//   clearAuthentication: () => void;
-// };
+  setAuthenticatedUser: (user: AuthUser) => void;
+  clearAuthentication: () => void;
+};
 
-const storeCreator = (set: any) => ({
+const storeCreator: StateCreator<AuthState> = (set) => ({
   user: null,
   isAuthenticated: false,
 
-  setAuthenticatedUser: (user: AuthUser) =>
+  setAuthenticatedUser: (user) =>
     set({
       user,
       isAuthenticated: true,
@@ -27,10 +28,9 @@ const storeCreator = (set: any) => ({
     }),
 });
 
-export const useAuthStore = create(
-  import.meta.env.DEV
-    ? devtools(storeCreator, {
-        name: 'ShellAuthStore',
-      })
-    : storeCreator,
+export const useAuthStore = create<AuthState>()(
+  devtools(storeCreator, {
+    name: 'ShellAuthStore',
+    enabled: import.meta.env.DEV,
+  }),
 );

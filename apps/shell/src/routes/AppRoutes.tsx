@@ -46,7 +46,7 @@ function OrderRoute() {
 }
 
 export default function AppRoutes() {
-  const user = useAuthStore((state: any) => state.user);
+  const user = useAuthStore((state) => state.user);
   const theme = useAppStore((state) => state.theme);
 
   useEffect(() => {
@@ -61,10 +61,10 @@ export default function AppRoutes() {
     });
   }, [user]);
 
-  const setUser = useAppStore((state) => state.setUser);
+  
 
   const setAuthenticatedUser = useAuthStore(
-    (state: any) => state.setAuthenticatedUser,
+    (state) => state.setAuthenticatedUser,
   );
 
   const handleLogin = () => {
@@ -78,7 +78,7 @@ export default function AppRoutes() {
   };
 
   const clearAuthentication = useAuthStore(
-    (state: any) => state.clearAuthentication,
+    (state) => state.clearAuthentication,
   );
   const handleLogout = () => {
     logout();
@@ -97,33 +97,10 @@ export default function AppRoutes() {
             <div>User: {user?.name ?? "Guest"}</div>
 
             <div>Theme: {theme}</div>
-            <button
-              onClick={() =>
-                setUser({
-                  id: "101",
-                  name: "Shasha",
-                })
-              }
-            >
-              Login as Shasha
-            </button>
-
-            <button
-              onClick={() =>
-                setUser({
-                  id: "102",
-                  name: "Rahul",
-                })
-              }
-            >
-              Login as Rahul
-            </button>
             <button onClick={handleLogin}>Login</button>
             <button onClick={handleLogout}>Logout</button>
             <Link to="/products">Go to Products</Link>
             <Link to="/orders">Go to Orders</Link>
-            <br />
-            <ProductRoute />
           </>
         }
       />
