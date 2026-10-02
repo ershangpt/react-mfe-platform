@@ -1,5 +1,9 @@
-import { getAuth } from '../auth/auth';
 import { createApiClient } from '@company/api-client';
+import { getAuth } from '../auth/auth';
+
+import { getRuntimeConfig } from '@company/runtime-config';
+
+const config = getRuntimeConfig();
 
 export type Product = {
   id: number;
@@ -8,10 +12,10 @@ export type Product = {
 };
 
 const apiClient = createApiClient({
-  baseUrl: 'http://localhost:8080',
-  getAccessToken: () => getAuth().getAccessToken(),
+  baseUrl: config.API_BASE_URL,
+  getAccessToken: () =>
+    getAuth().getAccessToken(),
 });
-
 
 export async function getProducts(): Promise<Product[]> {
   const auth = getAuth();
@@ -20,11 +24,12 @@ export async function getProducts(): Promise<Product[]> {
     throw new Error('User is not authenticated');
   }
 
-  const token = auth.getAccessToken();
+  console.log(
+    'Product API token:',
+    auth.getAccessToken(),
+  );
 
-  console.log('Product API token:', token);
-
-  // Temporary mock until backend is introduced.
+  // Temporary mock API.
   await new Promise((resolve) => {
     setTimeout(resolve, 800);
   });
