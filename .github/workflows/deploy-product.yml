@@ -1,0 +1,66 @@
+name: Deploy Product MFE
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - "apps/product-mfe/**"
+      - "packages/**"
+      - "package.json"
+      - "pnpm-lock.yaml"
+      - "pnpm-workspace.yaml"
+      - "turbo.json"
+      - ".github/workflows/deploy-product.yml"
+
+permissions:
+  contents: read
+  id-token: write
+
+env:
+  AWS_REGION: ap-south-1
+  S3_BUCKET: react-mfe-product-prod-sha
+  CLOUDFRONT_DISTRIBUTION_ID: E294EW5DINPQ0W
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10.17.1
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Build Product MFE
+        run: pnpm turbo build --filter=product-mfe...
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ secrets.AWS_DEPLOY_ROLE_ARN }}
+          aws-region: ${{ env.AWS_REGION }}
+
+      - name: Deploy Product to S3
+        run: |
+          aws s3 sync apps/product-mfe/dist \
+            s3://${{ env.S3_BUCKET }} \
+            --delete
+
+      - name: Invalidate Product CloudFront
+        run: |
+          aws cloudfront create-invalidation \
+            --distribution-id ${{ env.CLOUDFRONT_DISTRIBUTION_ID }} \
+            --paths "/*"
