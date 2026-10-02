@@ -1,0 +1,136 @@
+import { lazy, Suspense, useEffect } from "react";
+import { Routes, Route, Link } from "react-router-dom";
+import { ErrorBoundary } from "./../components/ErrorBoundary";
+import { useAppStore } from "./../store/appStore";
+import { publishUserChanged } from "./../events/eventBus";
+import { login } from "../auth/authService";
+import { useAuthStore } from "../auth/authStore";
+import { logout } from "../auth/authService";
+import { authContract } from "../auth/authContract";
+
+const ProductApp = lazy(() => import("product/ProductApp"));
+const OrderApp = lazy(() => import("order/OrderApp"));
+
+function ProductRoute() {
+  return (
+    <ErrorBoundary
+      fallback={
+        <div>
+          <h2>Product service unavailable</h2>
+          <p>Please try again later.</p>
+        </div>
+      }
+    >
+      <Suspense fallback={<div>Loading Products...</div>}>
+        <ProductApp auth={authContract}/>
+      </Suspense>
+    </ErrorBoundary>
+  );
+}
+
+function OrderRoute() {
+  return (
+    <ErrorBoundary
+      fallback={
+        <div>
+          <h2>Order service unavailable</h2>
+          <p>Please try again later.</p>
+        </div>
+      }
+    >
+      <Suspense fallback={<div>Loading Orders...</div>}>
+        <OrderApp />
+      </Suspense>
+    </ErrorBoundary>
+  );
+}
+
+export default function AppRoutes() {
+  const user = useAuthStore((state: any) => state.user);
+  const theme = useAppStore((state) => state.theme);
+
+  useEffect(() => {
+    if (!user) {
+      return;
+    }
+    console.log("Publishing user changed event:", user);
+    publishUserChanged({
+      id: user.id,
+      name: user.name,
+      tenant: "acme",
+    });
+  }, [user]);
+
+  const setUser = useAppStore((state) => state.setUser);
+
+  const setAuthenticatedUser = useAuthStore(
+    (state: any) => state.setAuthenticatedUser,
+  );
+
+  const handleLogin = () => {
+    const session = login({
+      id: "101",
+      name: "Shasha",
+      email: "shasha@example.com",
+    });
+
+    setAuthenticatedUser(session.user);
+  };
+
+  const clearAuthentication = useAuthStore(
+    (state: any) => state.clearAuthentication,
+  );
+  const handleLogout = () => {
+    logout();
+    clearAuthentication();
+  };
+
+  <button onClick={handleLogout}>Logout</button>;
+
+  return (
+    <Routes>
+      <Route
+        path="/"
+        element={
+          <>
+            <h1>Enterprise Commerce Portal</h1>
+            <div>User: {user?.name ?? "Guest"}</div>
+
+            <div>Theme: {theme}</div>
+            <button
+              onClick={() =>
+                setUser({
+                  id: "101",
+                  name: "Shasha",
+                })
+              }
+            >
+              Login as Shasha
+            </button>
+
+            <button
+              onClick={() =>
+                setUser({
+                  id: "102",
+                  name: "Rahul",
+                })
+              }
+            >
+              Login as Rahul
+            </button>
+            <button onClick={handleLogin}>Login</button>
+            <button onClick={handleLogout}>Logout</button>
+            <Link to="/products">Go to Products</Link>
+            <Link to="/orders">Go to Orders</Link>
+            <br />
+            <ProductRoute />
+          </>
+        }
+      />
+
+      <Route path="/products/*" element={<ProductRoute />} />
+
+      <Route path="/orders/*" element={<OrderRoute />} />
+    </Routes>
+  );
+}
