@@ -85,8 +85,6 @@ export default function AppRoutes() {
     clearAuthentication();
   };
 
-  <button onClick={handleLogout}>Logout</button>;
-
   return (
     <Routes>
       <Route
