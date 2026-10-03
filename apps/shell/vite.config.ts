@@ -10,6 +10,12 @@ export default defineConfig({
       name: 'shell',
 
       remotes: {
+        product: {
+          type: 'module',
+          name: 'product',
+          entry: 'https://d3oiopgmakh4ga.cloudfront.net/remoteEntry.js',
+        },
+
         order: {
           type: 'module',
           name: 'order',
