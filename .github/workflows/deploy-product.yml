@@ -21,6 +21,7 @@ env:
   AWS_REGION: ap-south-1
   S3_BUCKET: react-mfe-product-prod-sha
   CLOUDFRONT_DISTRIBUTION_ID: E294EW5DINPQ0W
+  APP_VERSION: v1.0.0
 
 jobs:
   deploy:
@@ -71,46 +72,10 @@ jobs:
           role-to-assume: ${{ secrets.AWS_DEPLOY_ROLE_ARN }}
           aws-region: ${{ env.AWS_REGION }}
 
-      # --------------------------------------------------
-      # 7. Upload remoteEntry.js
-      #
-      # It is mutable and must be revalidated frequently.
-      # --------------------------------------------------
-      - name: Upload Product remote entry
-        run: |
-          aws s3 cp \
-            apps/product-mfe/dist/remoteEntry.js \
-            s3://${{ env.S3_BUCKET }}/remoteEntry.js \
-            --cache-control "no-cache,no-store,must-revalidate"
-
-      # --------------------------------------------------
-      # 8. Upload index.html
-      #
-      # index.html must always resolve to the latest build.
-      # --------------------------------------------------
-      - name: Upload Product index
-        run: |
-          aws s3 cp \
-            apps/product-mfe/dist/index.html \
-            s3://${{ env.S3_BUCKET }}/index.html \
-            --cache-control "no-cache,no-store,must-revalidate"
-
-      # --------------------------------------------------
-      # 9. Upload hashed static assets
-      #
-      # Hashed assets are immutable and can be cached for
-      # a long period.
-      #
-      # IMPORTANT:
-      # No --delete here. Old assets remain available for
-      # users still running an older MFE version.
-      # --------------------------------------------------
-      - name: Upload Product assets
+      - name: Upload Product release
         run: |
           aws s3 sync apps/product-mfe/dist \
-            s3://${{ env.S3_BUCKET }} \
-            --exclude "remoteEntry.js" \
-            --exclude "index.html" \
+            s3://${{ env.S3_BUCKET }}/releases/${{ env.APP_VERSION }} \
             --cache-control "public,max-age=31536000,immutable"
 
       # --------------------------------------------------
