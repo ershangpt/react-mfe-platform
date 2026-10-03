@@ -13,7 +13,7 @@ export default defineConfig({
         product: {
           type: 'module',
           name: 'product',
-          entry: 'https://d3oiopgmakh4ga.cloudfront.net/releases/v1.1.0/remoteEntry.js',
+          entry: 'https://d3oiopgmakh4ga.cloudfront.net/releases/v1.0.0/remoteEntry.js',
         },
 
         order: {
