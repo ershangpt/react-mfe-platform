@@ -19,7 +19,7 @@ export default defineConfig({
         order: {
           type: 'module',
           name: 'order',
-          entry: 'http://localhost:5175/remoteEntry.js',
+          entry: 'https://d1b4jzfc9ghgkm.cloudfront.net/remoteEntry.js',
         },
       },
 

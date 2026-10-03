@@ -9,6 +9,8 @@ export default defineConfig({
     federation({
       name: 'order',
 
+      filename: 'remoteEntry.js',
+
       exposes: {
         './OrderApp': './src/OrderApp.tsx',
       },
