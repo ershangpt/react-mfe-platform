@@ -8,7 +8,11 @@ import { useAuthStore } from "../auth/authStore";
 import { logout } from "../auth/authService";
 import { authContract } from "../auth/authContract";
 
-const ProductApp = lazy(() => import("product/ProductApp"));
+import { loadRemote } from '@module-federation/enhanced/runtime';
+
+const ProductApp = lazy(
+  () => loadRemote('product/ProductApp') as Promise<any>
+);
 const OrderApp = lazy(() => import("order/OrderApp"));
 
 function ProductRoute() {

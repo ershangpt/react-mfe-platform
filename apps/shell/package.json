@@ -13,6 +13,7 @@
     "@company/api-client": "workspace:*",
     "@company/auth-contract": "workspace:*",
     "@company/ui": "workspace:*",
+    "@module-federation/enhanced": "^2.9.2",
     "@module-federation/vite": "^1.23.0",
     "react": "^19.2.8",
     "react-dom": "^19.2.8",
