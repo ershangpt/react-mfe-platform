@@ -24,7 +24,7 @@ export function ProductApp() {
 
   return (
     <div>
-      <h1>Products — v1.0.0</h1>
+      <h1>Products — v1.1.0</h1>
 
       <div>
         Current User:{' '}

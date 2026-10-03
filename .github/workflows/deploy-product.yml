@@ -21,7 +21,7 @@ env:
   AWS_REGION: ap-south-1
   S3_BUCKET: react-mfe-product-prod-sha
   CLOUDFRONT_DISTRIBUTION_ID: E294EW5DINPQ0W
-  APP_VERSION: v1.0.0
+  APP_VERSION: v1.1.0
 
 jobs:
   deploy:
