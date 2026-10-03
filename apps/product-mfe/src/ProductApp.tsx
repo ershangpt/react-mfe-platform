@@ -31,11 +31,6 @@ export function ProductApp() {
         {user ? user.name : 'No user'}
       </div>
 
-      <div>
-        Tenant:{' '}
-        {user ? user.tenant : 'No tenant'}
-      </div>
-
       {products.map((product) => (
         <div key={product.id}>
           {product.name} - ₹{product.price}
